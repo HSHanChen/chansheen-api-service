@@ -1,0 +1,200 @@
+{
+  "2025-01-01": {
+    "dateType": 3,
+    "weekName": "星期三",
+    "note": "元旦",
+    "lunar": "十一月廿一"
+  },
+  "2025-01-26": {
+    "dateType": 1,
+    "weekName": "星期日",
+    "note": "春节调休补班",
+    "lunar": "腊月初七"
+  },
+  "2025-01-28": {
+    "dateType": 3,
+    "weekName": "星期二",
+    "note": "春节除夕",
+    "lunar": "腊月廿九"
+  },
+  "2025-01-29": {
+    "dateType": 3,
+    "weekName": "星期三",
+    "note": "春节初一",
+    "lunar": "正月初一"
+  },
+  "2025-01-30": {
+    "dateType": 3,
+    "weekName": "星期四",
+    "note": "春节初二",
+    "lunar": "正月初二"
+  },
+  "2025-01-31": {
+    "dateType": 3,
+    "weekName": "星期五",
+    "note": "春节初三",
+    "lunar": "正月初三"
+  },
+  "2025-02-01": {
+    "dateType": 2,
+    "weekName": "星期六",
+    "note": "春节假期",
+    "lunar": "正月初四"
+  },
+  "2025-02-02": {
+    "dateType": 2,
+    "weekName": "星期日",
+    "note": "春节假期",
+    "lunar": "正月初五"
+  },
+  "2025-02-03": {
+    "dateType": 2,
+    "weekName": "星期一",
+    "note": "春节假期",
+    "lunar": "正月初六"
+  },
+  "2025-02-04": {
+    "dateType": 2,
+    "weekName": "星期二",
+    "note": "春节假期",
+    "lunar": "正月初七"
+  },
+  "2025-02-08": {
+    "dateType": 1,
+    "weekName": "星期六",
+    "note": "春节调休补班",
+    "lunar": "正月十三"
+  },
+  "2025-04-04": {
+    "dateType": 3,
+    "weekName": "星期五",
+    "note": "清明节",
+    "lunar": "二月十二"
+  },
+  "2025-04-05": {
+    "dateType": 2,
+    "weekName": "星期六",
+    "note": "清明节假期",
+    "lunar": "二月十三"
+  },
+  "2025-04-06": {
+    "dateType": 2,
+    "weekName": "星期日",
+    "note": "清明节假期",
+    "lunar": "二月十四"
+  },
+  "2025-04-27": {
+    "dateType": 1,
+    "weekName": "星期日",
+    "note": "劳动节调休补班",
+    "lunar": "三月十六"
+  },
+  "2025-05-01": {
+    "dateType": 3,
+    "weekName": "星期四",
+    "note": "劳动节",
+    "lunar": "三月十九"
+  },
+  "2025-05-02": {
+    "dateType": 3,
+    "weekName": "星期五",
+    "note": "劳动节",
+    "lunar": "三月廿"
+  },
+  "2025-05-03": {
+    "dateType": 2,
+    "weekName": "星期六",
+    "note": "劳动节假期",
+    "lunar": "三月廿一"
+  },
+  "2025-05-04": {
+    "dateType": 2,
+    "weekName": "星期日",
+    "note": "劳动节假期",
+    "lunar": "三月廿二"
+  },
+  "2025-05-05": {
+    "dateType": 2,
+    "weekName": "星期一",
+    "note": "劳动节假期",
+    "lunar": "三月廿三"
+  },
+  "2025-05-31": {
+    "dateType": 3,
+    "weekName": "星期六",
+    "note": "端午节",
+    "lunar": "五月初五"
+  },
+  "2025-06-01": {
+    "dateType": 2,
+    "weekName": "星期日",
+    "note": "端午节假期",
+    "lunar": "五月初六"
+  },
+  "2025-06-02": {
+    "dateType": 2,
+    "weekName": "星期一",
+    "note": "端午节假期",
+    "lunar": "五月初七"
+  },
+  "2025-09-28": {
+    "dateType": 1,
+    "weekName": "星期日",
+    "note": "国庆调休补班",
+    "lunar": "八月初七"
+  },
+  "2025-10-01": {
+    "dateType": 3,
+    "weekName": "星期三",
+    "note": "国庆节",
+    "lunar": "八月一十"
+  },
+  "2025-10-02": {
+    "dateType": 3,
+    "weekName": "星期四",
+    "note": "国庆节",
+    "lunar": "八月十一"
+  },
+  "2025-10-03": {
+    "dateType": 3,
+    "weekName": "星期五",
+    "note": "国庆节",
+    "lunar": "八月十二"
+  },
+  "2025-10-04": {
+    "dateType": 2,
+    "weekName": "星期六",
+    "note": "国庆节假期",
+    "lunar": "八月十三"
+  },
+  "2025-10-05": {
+    "dateType": 2,
+    "weekName": "星期日",
+    "note": "国庆节假期",
+    "lunar": "八月十四"
+  },
+  "2025-10-06": {
+    "dateType": 3,
+    "weekName": "星期一",
+    "note": "中秋节",
+    "lunar": "八月十五"
+  },
+  "2025-10-07": {
+    "dateType": 2,
+    "weekName": "星期二",
+    "note": "国庆节假期",
+    "lunar": "八月十六"
+  },
+  "2025-10-08": {
+    "dateType": 2,
+    "weekName": "星期三",
+    "note": "国庆节假期",
+    "lunar": "八月十七"
+  },
+  "2025-10-11": {
+    "dateType": 1,
+    "weekName": "星期六",
+    "note": "国庆调休补班",
+    "lunar": "八月廿十"
+  }
+}
