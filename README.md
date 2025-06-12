@@ -1,4 +1,4 @@
-# ChanSheen.com API Service with Dynamic JWT Token
+# ChanSheen.com API Service
 
 ## 功能说明
 
@@ -27,6 +27,8 @@ Body: username=<username>&password=<password>
 
 4. 带 token 调用日历接口（GET）
 ```
+GET /api/calendar?year=2025
+GET /api/calendar?month=2025-10
 GET /api/calendar?date=2025-10-01
 Header: Authorization: Bearer <token>
 ```
