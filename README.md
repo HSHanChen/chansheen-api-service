@@ -1,10 +1,10 @@
-# Halo API Service with Dynamic JWT Token
+# ChanSheen.com API Service with Dynamic JWT Token
 
 ## 功能说明
 
-- 用户通过用户名密码获取 JWT Token
+- 用户通过用户名密码获取 Token
 - 日历接口需在请求头带 Authorization: Bearer <token> 才能访问
-- 用户名密码存在本地 JSON 文件，可替换为数据库
+- 用户名密码存在本地 JSON 文件，可替换为数据库，可配合前端开放注册
 
 ## 运行说明
 
@@ -22,8 +22,7 @@ python run.py
 ```
 POST /api/auth/token
 Content-Type: application/x-www-form-urlencoded
-
-username=admin&password=admin123
+Body: username=<username>&password=<password>
 ```
 
 4. 带 token 调用日历接口（GET）
