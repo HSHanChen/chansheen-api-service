@@ -1,2 +1,24 @@
-.env
+# Python 缓存
+__pycache__/
+*.py[cod]
+*.pyo
+
+# VSCode 或 PyCharm 设置
+.idea/
+.vscode/
+
+# 虚拟环境
 venv/
+.env/
+env/
+
+# 日志和系统文件
+*.log
+.DS_Store
+Thumbs.db
+
+# 如果用 poetry/pipenv 等
+poetry.lock
+Pipfile.lock
+
+*.users.json
