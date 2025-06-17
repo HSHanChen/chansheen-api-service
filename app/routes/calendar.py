@@ -13,13 +13,13 @@ from app.core.database import async_session, Base, get_async_session
 from sqlalchemy import cast, String
 
 router = APIRouter()
-@router.get("/")
+@router.get("/", summary="节假日查询", description="根据年份、月份、日期查询节假日信息")
 @limiter.limit("10/minute")
 async def query_calendar(
         request: Request,
-        year: str | None = Query(None),
-        month: str | None = Query(None),
-        date: str | None = Query(None),
+        year: str | None = Query(None, description="查询的年份，格式为YYYY"),
+        month: str | None = Query(None, description="查询的月份，格式为YYYY-MM"),
+        date: str | None = Query(None, description="查询的日期，格式为YYYY-MM-DD"),
         session: AsyncSession = Depends(get_async_session),
         current_user: dict = Depends(get_current_user)
 ):

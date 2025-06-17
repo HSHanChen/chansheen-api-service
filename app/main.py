@@ -10,9 +10,15 @@ from app.core.limiter import limiter
 # 日志配置
 logger = logging.getLogger(__name__)
 
-
 # 创建 FastAPI 实例
-app = FastAPI(title="ChanSheen's API Service")
+app = FastAPI(
+    title="ChanSheen's API Service",
+    docs_url="/docs",   # Swagger UI
+    redoc_url="/redoc", # ReDoc
+    openapi_url="/openapi.json",
+    description="ChanSheen's API Service. If you want to use the api service, pls contact hschenhan@gmail.com",
+    version="1.0.1"
+)
 
 # 中间件
 @app.middleware("http")
