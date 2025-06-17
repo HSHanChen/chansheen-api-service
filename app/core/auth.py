@@ -8,6 +8,7 @@ from dotenv import load_dotenv
 from passlib.context import CryptContext
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
+from contextlib import asynccontextmanager
 
 from app.models.user import User
 from app.core.database import async_session, Base, get_async_session
@@ -69,12 +70,3 @@ def create_access_token(data: dict, expires_delta: Optional[timedelta] = None):
     to_encode.update({"exp": expire, "sub": data["sub"]})
     encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
     return encoded_jwt
-
-
-
-
-
-
-
-
-

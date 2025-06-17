@@ -34,8 +34,7 @@ async_session = async_sessionmaker(engine, expire_on_commit=False)
 
 Base = declarative_base()
 
-# ✅ 这个是关键：FastAPI依赖注入用的 session getter
-@asynccontextmanager
+# FastAPI依赖注入用的 session getter
 async def get_async_session() -> AsyncSession:
     async with async_session() as session:
         yield session
