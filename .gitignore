@@ -28,3 +28,12 @@ alembic/*
 tools/*
 
 tests/*
+
+# Python
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+.env
+.venv
