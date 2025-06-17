@@ -14,9 +14,8 @@ from urllib.parse import quote_plus
 
 load_dotenv()
 DB_PASSWORD = os.getenv("DB_PASSWORD")
-print(f"DB_PASSWORD的类型是：{type(DB_PASSWORD)}，值是：{DB_PASSWORD}")
 
-def get_database_rul() -> str:
+def get_database_url() -> str:
     DB_USER = os.getenv("DB_USER")
     raw_password = os.getenv("DB_PASSWORD")
     DB_HOST = os.getenv("DB_HOST")
@@ -29,8 +28,8 @@ def get_database_rul() -> str:
     DB_PASSWORD = quote_plus(raw_password)
     return f"mysql+asyncmy://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
 
-DATABASE_URL = get_database_rul()
-engine = create_async_engine(DATABASE_URL, echo=True, future=True)
+DATABASE_URL = get_database_url()
+engine = create_async_engine(DATABASE_URL, echo=False, future=True)
 async_session = async_sessionmaker(engine, expire_on_commit=False)
 
 Base = declarative_base()
