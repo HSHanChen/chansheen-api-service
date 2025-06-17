@@ -1,33 +1,32 @@
+import os
+import json
 import re
-
 from fastapi import APIRouter, Query, HTTPException, Header, Depends
 from datetime import datetime
+from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.future import select
 from app.core.auth import get_current_user
 from app.core.limiter import limiter
 from fastapi import Request
-import json
-import os
+from app.models.holidays import Holidays
+from app.core.database import async_session, Base, get_async_session
+from sqlalchemy import cast, String
 
 router = APIRouter()
-
-DATA_FILE = os.path.join(os.path.dirname(__file__), "..", "data", "holiday_data.json")
-with open(DATA_FILE, "r", encoding="utf-8") as f:
-    HOLIDAYS = json.load(f)
-
-
-@router.get("")
+@router.get("/")
 @limiter.limit("10/minute")
-def query_calendar(
+async def query_calendar(
         request: Request,
         year: str | None = Query(None),
         month: str | None = Query(None),
         date: str | None = Query(None),
+        session: AsyncSession = Depends(get_async_session),
         current_user: dict = Depends(get_current_user)
 ):
     if year:
         key_prefix = year
         label = "年份"
-        format_check = lambda x: int(x)
+        _ = int(year)
     elif month:
         key_prefix = month
         label = "月份"
@@ -46,30 +45,36 @@ def query_calendar(
                 raise ValueError
         except ValueError:
             raise HTTPException(status_code=400, detail="日期格式错误，应为 YYYY-MM-DD")
-        holiday_info = HOLIDAYS.get(date)
+
+        stmt = select(Holidays).where(Holidays.date == date)
+        result = await session.execute(stmt)
+        holiday_info = result.scalar_one_or_none()
+
         if holiday_info:
             return {
-                "date": date,
-                "lunar": holiday_info.get("lunar"),
-                "dateType": holiday_info.get("dateType"),
-                "weekday": holiday_info.get("weekName"),
-                "note": holiday_info.get("note")
+                "date": str(holiday_info.date),
+                "lunar": holiday_info.lunar,
+                "dateType": holiday_info.dateType,
+                "weekday": holiday_info.weekName,
+                "note": holiday_info.note
             }
         else:
             raise HTTPException(status_code=200, detail=f"{date} 非节假日或调休")
     else:
         raise HTTPException(status_code=400, detail="必须提供：year, month 或 date 参数且只能一个")
 
-    results = []
-    for d, info in HOLIDAYS.items():
-        if d.startswith(key_prefix):
-            results.append({
-                "date": d,
-                "lunar": info.get("lunar"),
-                "dateType": info.get("dateType"),
-                "weekday": info.get("weekName"),
-                "note": info.get("note")
-            })
-    if not results:
+    # year 或 month 查询
+    stmt = select(Holidays).where(cast(Holidays.date, String).like(f"{key_prefix}%"))
+    result = await session.execute(stmt)
+    holiday_info = result.scalars().all()
+
+    if not holiday_info:
         raise HTTPException(status_code=404, detail=f"{label} {key_prefix} 未维护节假日信息")
-    return results
+
+    return [{
+        "date": str(h.date),
+        "lunar": h.lunar,
+        "dateType": h.dateType,
+        "weekday": h.weekName,
+        "note": h.note
+    } for h in holiday_info]

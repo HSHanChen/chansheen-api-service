@@ -7,15 +7,16 @@
 from pyasn1.type.univ import Boolean
 # app/models/user.py
 
-from sqlalchemy import Column, Integer, String
+from sqlalchemy import Column, Date, Integer, String
 from sqlalchemy.ext.declarative import declarative_base
 
 Base = declarative_base()
 
-class User(Base):
+class Holidays(Base):
     __tablename__ = "Holidays"
 
-    id = Column(Integer, primary_key=True, index=True)
-    username = Column("UserName", String(50), unique=True, nullable=False, index=True)
-    password = Column("Passwd", String(128), nullable=False)
-    invalid = Column(Integer, nullable=True)
+    date = Column(Date, primary_key=True)
+    dateType = Column(Integer, nullable=False)
+    weekName = Column(String(10), nullable=False)
+    note = Column("Note", String(50))
+    lunar = Column("Lunar", String(20))
