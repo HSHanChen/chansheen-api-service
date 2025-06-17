@@ -26,3 +26,5 @@ tools/generate_passwd.py
 
 alembic/*
 tools/*
+
+tests/*
