@@ -4,3 +4,8 @@ python-jose[cryptography]
 python-multipart
 slowapi
 python-dotenv
+
+SQLAlchemy>=1.4
+asyncmy
+alembic
+bcrypt

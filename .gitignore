@@ -22,3 +22,6 @@ poetry.lock
 Pipfile.lock
 
 *.users.json
+generate_passwd.py
+
+alembic/*
