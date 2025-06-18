@@ -1,136 +1,171 @@
-# ChanSheen API Service
 
-基于 FastAPI 开发的后端 API 服务，提供用户认证和中国节假日查询接口，支持异步数据库访问。
+# ChanSheen API Service / 禅绅 API 服务
 
----
+## 📌 项目简介 | Project Introduction
 
-## 目录
+本项目是一个基于 **FastAPI** 构建的轻量级 API 服务，支持令牌验证、节假日查询、用户认证等功能。适用于企业内部系统、HR 接口对接、日历服务等应用场景。
 
-- [项目简介](#项目简介)
-- [技术栈](#技术栈)
-- [环境配置](#环境配置)
-- [安装运行](#安装运行)
-- [接口文档](#接口文档)
-- [接口说明](#接口说明)
-- [版本更新](#版本更新)
-- [后续计划](#后续计划)
-- [许可证](#许可证)
+This project is a lightweight API service built with **FastAPI**, featuring token-based authentication, holiday queries, and user login functionality. It is suitable for enterprise systems, HR integrations, and calendar services.
 
 ---
 
-## 项目简介
+## 🆚 版本变更 | Version History
 
-ChanSheen API Service 是一个轻量、高性能的后台服务，主要实现了：
-
-- 基于 JWT 的用户认证体系
-- 节假日查询接口，支持按日期查询中国法定节假日及调休信息
-- 支持从 JSON 文件和数据库两种方式读取节假日数据
-- 使用异步 SQLAlchemy 和 asyncmy 连接 MySQL，提高并发性能
+| 版本号 | 说明 (中文) | Description (English) |
+|--------|-------------|------------------------|
+| 1.0.0  | 基于本地 JSON 文件提供节假日接口和用户验证功能。<br>Holiday API and user auth from local JSON file. |
+| 1.0.1  | 节假日和用户数据改为从数据库读取，采用 SQLAlchemy Async 实现异步 ORM 操作。<br>Holiday & user data now retrieved from the database using SQLAlchemy Async ORM. |
 
 ---
 
-## 技术栈
+## 🚀 快速开始 | Quick Start
 
-- Python 3.11+
-- FastAPI
-- SQLAlchemy Async ORM
-- asyncmy (MySQL 异步驱动)
-- passlib (密码加密)
-- python-jose (JWT 认证)
-- python-dotenv (环境变量管理)
-- slowapi（限流）
-- Uvicorn 作为 ASGI 服务器
+### 🧱 安装依赖 | Install Dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+### ▶️ 运行项目 | Run the Project
+
+```bash
+uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+```
+
+或者使用 systemd 启动服务：
+
+```bash
+sudo systemctl start chansheenapi.service
+```
 
 ---
 
-## 环境配置
+## 🔐 用户认证 | User Authentication
 
-请在项目根目录新建 `.env` 文件，示例如下：
+通过 `/api/auth/token` 获取访问 Token：
 
-```dotenv
+### 请求 | Request
+
+`POST /api/auth/token`
+
+请求体 (表单格式)：
+
+```bash
+username=admin&password=admin
+```
+
+### 响应 | Response
+
+```json
+{
+  "access_token": "xxx.yyy.zzz",
+  "token_type": "bearer"
+}
+```
+
+---
+
+## 📅 节假日接口 | Holiday API
+
+### 查询节假日 | Query Holiday
+
+接口地址：
+
+```
+GET /api/calendar
+```
+
+支持查询参数：
+
+- `year=2025`
+- `month=2025-06`
+- `date=2025-06-18`
+
+请求需附带认证 Token：
+
+```
+Authorization: Bearer <your_token>
+```
+
+### 示例响应 | Example Response
+
+```json
+{
+  "data": [
+    {
+      "date": "2025-06-18",
+      "dateType": 1,
+      "weekName": "星期三",
+      "note": "工作日",
+      "lunar": "五月廿三"
+    }
+  ]
+}
+```
+
+---
+
+## ⚙️ 配置说明 | Configuration
+
+环境变量保存在 `.env` 文件中：
+
+```env
 DB_USER=root
 DB_PASSWORD=your_password
-DB_HOST=127.0.0.1
+DB_HOST=localhost
 DB_PORT=3306
-DB_NAME=chansheen
+DB_NAME=holiday_db
 
 SECRET_KEY=your_secret_key
 ALGORITHM=HS256
 ACCESS_TOKEN_EXPIRE_MINUTES=120
 ```
 
-## 安装运行
-1. 克隆仓库并进入项目目录
-```bash
-git clone https://github.com/HSHanChen/chansheen-api-service.git
-cd chansheen-api-service
-```
+---
 
-2. 创建虚拟环境并激活（可选）
+## 🗃️ 数据库结构 | Database Schema
 
-```bash
-python -m venv venv
-source venv/bin/activate  # Linux/macOS
-venv\Scripts\activate     # Windows
-```
+### 表：holidays
 
-3. 安装依赖
+| 字段名    | 类型     | 说明           |
+|-----------|----------|----------------|
+| date      | DATE     | 日期           |
+| dateType  | TINYINT  | 日期类型（1 正常工作日，2 休息日，3 法定节假日） |
+| weekName  | VARCHAR  | 星期名称       |
+| note      | TEXT     | 备注说明       |
+| lunar     | VARCHAR  | 农历日期       |
 
-```bash
-pip install -r requirements.txt
-```
+### 表：users
 
-4. 启动项目
-```bash
-python run.py
-```
-默认监听地址为 http://0.0.0.0:8001
+| 字段名    | 类型     | 说明     |
+|-----------|----------|----------|
+| username  | VARCHAR  | 用户名   |
+| password  | VARCHAR  | 加密密码 |
 
-## 接口文档
-- Swagger UI: http://localhost:8001/docs
-- ReDoc: http://localhost:8001/redoc
+---
 
-## 接口说明
-### 认证模块
-- POST /api/auth/token
-    请求参数：用户名、密码
-    返回：JWT 访问令牌
+## 📦 接口文档 | API Documentation
 
-- GET /api/auth/me
-    需要认证，获取当前登录用户信息
+FastAPI 自动生成的接口文档地址如下：
 
-### 日历模块
-- GET /api/calendar?date=YYYY-MM-DD
-    查询指定日期的节假日信息，返回字段包括：
-    - date：日期 
-    - dateType：日期类型（1=工作日，2=调休假，3=法定节假日） 
-    - weekName：星期几 
-    - note：备注 
-    - lunar：农历信息
+- Swagger UI: [http://localhost:8000/docs](http://localhost:8000/docs)
+- ReDoc: [http://localhost:8000/redoc](http://localhost:8000/redoc)
 
-## 版本更新
+---
 
-版本号	日期	变更内容
-1.0.0	2025-06-15	初始版本，节假日数据从 JSON 文件读取
-1.0.1	2025-06-17	节假日数据改为从数据库异步读取，支持 SQLAlchemy AsyncSession
+## 📬 联系方式 | Contact
 
-## 后续计划
+如需支持或合作，请联系：
 
-- 增加节假日维护后台管理系统
+- 📧 邮箱：`justin.han@example.com`
+- 🌐 GitHub: [https://github.com/HSHanChen/chansheen-api-service](https://github.com/HSHanChen/chansheen-api-service)
 
-- 支持多用户角色权限管理
+---
 
-- 添加更多节日及节气查询接口
+## 📄 许可证 | License
 
-- 统一日志管理与错误监控
+本项目采用 MIT 开源许可证。  
+This project is licensed under the **MIT License**.
 
-- 提供 Docker 镜像部署方案
-
-- 许可证
-  本项目采用 MIT 许可证，详情见 LICENSE 文件。
-
-## 联系方式
-作者：Chan Sheen
-邮箱：hschenhan@gmail.com
-GitHub: https://github.com/HSHanChen/chansheen-api-service
-感谢使用 ChanSheen API Service，欢迎反馈与贡献！
+详细信息请参见项目根目录下的 `LICENSE` 文件。  
+See the `LICENSE` file for details.
