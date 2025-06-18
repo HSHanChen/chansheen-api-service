@@ -1,5 +1,5 @@
 
-# ChanSheen API Service / 禅绅 API 服务
+# ChanSheen API Service / ChanSheen API 服务
 
 ## 📌 项目简介 | Project Introduction
 
@@ -157,7 +157,8 @@ FastAPI 自动生成的接口文档地址如下：
 
 如需支持或合作，请联系：
 
-- 📧 邮箱：`justin.han@example.com`
+- 📧 邮箱：`hschenhan@gmail.com`
+- 🔗 网站：[https://www.chansheen.com](https://www.chansheen.com)
 - 🌐 GitHub: [https://github.com/HSHanChen/chansheen-api-service](https://github.com/HSHanChen/chansheen-api-service)
 
 ---
